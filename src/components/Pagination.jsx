@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import settings from './../context/settings';
+import './../styles/Pagination.css';
 
 function Pagination({ setCurrentPage, listLength }) {
   const { numberOfItems } = useContext(settings);
 
   function handlePageClick(e) {
-    console.log(e.target.innerHTML);
     setCurrentPage(parseInt(e.target.innerHTML));
   }
 
@@ -18,10 +18,10 @@ function Pagination({ setCurrentPage, listLength }) {
   }
 
   return (
-    <div>
+    <div id='paginationDiv'>
       {
         getPageNumbers().map(num => {
-          return <div key={num} onClick={handlePageClick}>{num}</div>
+          return <span className='pagination' key={num} onClick={handlePageClick}>{num}</span>
         })
       }
     </div>

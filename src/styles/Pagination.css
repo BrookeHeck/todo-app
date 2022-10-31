@@ -1,0 +1,10 @@
+.pagination {
+  background-color: blue;
+  color: white;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+#paginationDiv {
+  margin-top: 10px;
+}

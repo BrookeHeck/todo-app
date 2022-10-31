@@ -27,9 +27,6 @@ function ItemList({ list, setList }) {
   function getPageList() {
     const start = currentPage * numberOfItems - numberOfItems;
     const end = (start + numberOfItems) < list.length ? start + numberOfItems : list.length;
-    console.log(start + numberOfItems);
-    console.log(list.length);
-    console.log(start, end);
     return list.slice(start, end);
   }
 
