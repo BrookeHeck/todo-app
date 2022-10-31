@@ -2,28 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import ItemForm from './ItemForm';
 import ItemList from './ItemList';
+import settings from './../context/settings';
 
 const ToDo = () => {
 
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
 
-  function deleteItem(id) {
-    const items = list.filter( item => item.id !== id );
-    setList(items);
-  }
-
-  function toggleComplete(id) {
-
-    const items = list.map( item => {
-      if ( item.id == id ) {
-        item.complete = ! item.complete;
-      }
-      return item;
-    });
-
-    setList(items);
-  }
+  const [showCompleted, setShowComplete] = useState(false);
+  const [numberOfItems, setNumberOfItems] = useState(10);
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
@@ -32,12 +19,22 @@ const ToDo = () => {
   }, [list]);
 
   return (
-    <>
-      <Header incomplete={incomplete}/>
-      <ItemForm list={list} setList={setList}/>
-      <ItemList list={list} toggleComplete={toggleComplete} deleteItem={deleteItem} />
+    <settings.Provider value={
+      {
+        ...{
+          showCompleted: showCompleted,
+          setShowComplete: setShowComplete,
+          numberOfItems: numberOfItems,
+          setNumberOfItems: setNumberOfItems,
+        }
+      }
+    }>
 
-    </>
+      <Header incomplete={incomplete} />
+      <ItemForm list={list} setList={setList} />
+      <ItemList list={list} setList={setList} />
+
+    </settings.Provider>
   );
 };
 
