@@ -5,7 +5,8 @@ function Pagination({ setCurrentPage, listLength }) {
   const { numberOfItems } = useContext(settings);
 
   function handlePageClick(e) {
-    setCurrentPage(e.target.value);
+    console.log(e.target.innerHTML);
+    setCurrentPage(parseInt(e.target.innerHTML));
   }
 
   function getPageNumbers() {
