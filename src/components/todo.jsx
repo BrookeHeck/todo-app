@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import ItemForm from './ItemForm';
 import ItemList from './ItemList';
-import settings from './../context/settings';
+import settings from '../context/settings';
+import Nav from './Nav';
+
+import './../styles/todo.css';
 
 const ToDo = () => {
 
@@ -29,10 +32,12 @@ const ToDo = () => {
         }
       }
     }>
-
+      <Nav />
       <Header incomplete={incomplete} />
-      <ItemForm list={list} setList={setList} />
-      <ItemList list={list} setList={setList} />
+      <div className='listBody'>
+        <ItemForm list={list} setList={setList} />
+        <ItemList list={list} setList={setList} />
+      </div>
 
     </settings.Provider>
   );

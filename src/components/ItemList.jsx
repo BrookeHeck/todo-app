@@ -2,6 +2,8 @@ import React from 'react';
 import Item from './Item';
 
 function ItemList({list, setList}) {
+
+
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);
     setList(items);
@@ -19,13 +21,13 @@ function ItemList({list, setList}) {
   }
 
   return (
-    <>
+    <div className='list'>
       {list.map(item => (
       <div key={item.id}>
         <Item item={item} toggleComplete={toggleComplete} deleteItem={deleteItem}/>
       </div>
     ))}
-    </>
+    </div>
   )
 }
 
