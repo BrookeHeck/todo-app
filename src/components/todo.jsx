@@ -13,7 +13,7 @@ const ToDo = () => {
   const [incomplete, setIncomplete] = useState([]);
 
   const [showCompleted, setShowComplete] = useState(false);
-  const [numberOfItems, setNumberOfItems] = useState(10);
+  const [numberOfItems, setNumberOfItems] = useState(2);
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
