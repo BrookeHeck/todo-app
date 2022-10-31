@@ -35,7 +35,7 @@ const ToDo = () => {
     <>
       <Header incomplete={incomplete}/>
       <ItemForm list={list} setList={setList}/>
-      <ItemList list={list} toggleComplete={toggleComplete} />
+      <ItemList list={list} toggleComplete={toggleComplete} deleteItem={deleteItem} />
 
     </>
   );
