@@ -1,8 +1,22 @@
-import React from 'react';
+import { useState, createContext, useEffect } from 'react';
 
-const settings = React.createContext({
-  showCompleted: true,
-  numberOfItems: 3,
-});
+export const SettingsContext = createContext();
 
-export default settings;
+function SettingsProvider(props) {
+  const [showCompleted, setShowCompleted] = useState(true);
+  const [ numberOfItems, setNumberOfItems ] = useState(3);
+
+  useEffect(() => {
+    // do local storage stuff
+  }, []);
+
+  return (
+    <SettingsContext.Provider
+      value = {{ showCompleted, setShowCompleted, numberOfItems, setNumberOfItems }}
+    >
+      {props.children}
+    </SettingsContext.Provider>
+  )
+}
+
+export default SettingsProvider;

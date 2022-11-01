@@ -1,17 +1,18 @@
 import { useContext, useState, useEffect } from 'react';
 import Item from './Item';
-import settings from './../context/settings';
+import { SettingsContext } from './../context/settings';
 import Pagination from './Pagination.jsx'
 function ItemList({ list, setList }) {
 
-  const { numberOfItems, showCompleted } = useContext(settings);
+  const context = useContext(SettingsContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [ displayedList, setDisplayedList] = useState(list);
 
   useEffect(() => {
+    console.log(context);
     setDisplayedList(list);
-    if(!showCompleted) setDisplayedList(filterByComplete());
-  }, [showCompleted, list]);
+    if(!context.showCompleted) setDisplayedList(filterByComplete());
+  }, [list]);
 
   function filterByComplete() {
     return list.filter(item => !item.complete)
@@ -29,13 +30,12 @@ function ItemList({ list, setList }) {
       }
       return item;
     });
-
     setList(items);
   }
 
   function getPageList() {
-    const start = currentPage * numberOfItems - numberOfItems;
-    const end = (start + numberOfItems) < displayedList.length ? start + numberOfItems : displayedList.length;
+    const start = currentPage * context.numberOfItems - context.numberOfItems;
+    const end = (start + context.numberOfItems) < displayedList.length ? start + context.numberOfItems : displayedList.length;
     return displayedList.slice(start, end);
   }
 

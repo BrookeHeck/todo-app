@@ -4,6 +4,7 @@ import SettingsForm from './SettingsForm';
 
 function Nav() {
   const [showForm, setShowForm] = useState(false);
+  
   return (
     <>
       <Navbar className='bp4-navbar bp4-dark'>

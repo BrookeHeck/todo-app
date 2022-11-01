@@ -1,24 +1,24 @@
 import { useContext } from 'react';
-import settings from '../context/settings';
+import {SettingsContext} from '../context/settings';
 import { FormGroup, Label, NumericInput, Switch, Button } from '@blueprintjs/core'
 
 function SettingsForm({ setShowForm }) {
-  const { showCompleted, numberOfItems, setShowCompleted, setNumberOfItems } = useContext(settings);
+  const context = useContext(SettingsContext);
 
   function handleNumberChange(e) {
-    setNumberOfItems(e);
+    context.setNumberOfItems(e);
     localStorage.clear();
     localStorage.setItem('settings', JSON.stringify({
       numberOfItems: e,
-      showCompleted: showCompleted,
+      showCompleted: context.showCompleted,
     }));
   }
 
   function handleSwitchChange(e) {
-    setShowCompleted(e.target.checked);
+    context.setShowCompleted(e.target.checked);
     localStorage.clear();
     localStorage.setItem('settings', JSON.stringify({
-      numberOfItems: numberOfItems,
+      numberOfItems: context.numberOfItems,
       showCompleted: e.target.checked,
     }));
   }
@@ -29,12 +29,14 @@ function SettingsForm({ setShowForm }) {
         <Label>
           Number of Items Per Page
           <NumericInput
-            value={numberOfItems}
+            value={context.numberOfItems}
             onValueChange={handleNumberChange}
+            min={1}
+            max={20}
           />
         </Label>
         <Switch
-          checked={showCompleted}
+          checked={context.showCompleted}
           label='Show Completed'
           onChange={handleSwitchChange}
         />
