@@ -1,21 +1,20 @@
 import { useContext } from 'react';
-import settings from './../context/settings';
-import { FormGroup, Label, Toaster, Position, NumericInput, Switch } from '@blueprintjs/core'
+import settings from '../context/settings';
+import { FormGroup, Label, NumericInput, Switch, Button } from '@blueprintjs/core'
 
-function SettingsForm({ showForm }) {
-  const { showCompleted, numberOfItems, setShowCompleted, setNumberOfItems } = useContext(settings);
+function SettingsForm({ setShowForm }) {
+  const { showCompleted, numberOfItems, setShowComplete, setNumberOfItems } = useContext(settings);
 
   function handleNumberChange(e) {
-    setNumberOfItems(e.target.value);
+    setNumberOfItems(e);
   }
 
   function handleSwitchChange(e) {
-    setShowCompleted(e.target.value);
+    setShowComplete(e.target.checked);
   }
 
   return (
-    <form onClick={() => showForm(false)}>
-      <p>Close</p>
+    <form id='settingsForm'>
       <FormGroup>
         <Label>
           Number of Items Per Page
@@ -30,6 +29,7 @@ function SettingsForm({ showForm }) {
           onChange={handleSwitchChange}
         />
       </FormGroup>
+      <Button onClick={() => setShowForm(false)}>Close</Button>
     </form>
   )
 }
