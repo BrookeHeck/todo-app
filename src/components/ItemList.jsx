@@ -2,6 +2,8 @@ import { useContext, useState, useEffect } from 'react';
 import Item from './Item';
 import { SettingsContext } from './../context/settings';
 import Pagination from './Pagination.jsx'
+import sort from './../lib/sorting';
+
 function ItemList({ list, setList }) {
 
   const context = useContext(SettingsContext);
@@ -10,12 +12,8 @@ function ItemList({ list, setList }) {
 
   useEffect(() => {
     setDisplayedList(list);
-    if(!context.showCompleted) setDisplayedList(filterByComplete());
+    if(!context.showCompleted) setDisplayedList(sort.filterByComplete(list));
   }, [context.showCompleted, list]);
-
-  function filterByComplete() {
-    return list.filter(item => !item.complete)
-  }
 
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);

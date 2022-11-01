@@ -7,7 +7,12 @@ function SettingsProvider(props) {
   const [ numberOfItems, setNumberOfItems ] = useState(3);
 
   useEffect(() => {
-    // do local storage stuff
+    const storage = localStorage.getItem('settings');
+    if(storage) {
+      const storageObject = JSON.parse(storage);
+      setShowCompleted(storageObject.showCompleted);
+      setNumberOfItems(storageObject.numberOfItems);
+    }
   }, []);
 
   return (
