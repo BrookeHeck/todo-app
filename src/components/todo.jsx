@@ -12,7 +12,7 @@ const ToDo = () => {
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
 
-  const [showCompleted, setShowComplete] = useState(false);
+  const [showCompleted, setShowComplete] = useState(true);
   const [numberOfItems, setNumberOfItems] = useState(3);
 
   useEffect(() => {
