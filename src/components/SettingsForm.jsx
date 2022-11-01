@@ -3,7 +3,7 @@ import settings from '../context/settings';
 import { FormGroup, Label, NumericInput, Switch, Button } from '@blueprintjs/core'
 
 function SettingsForm({ setShowForm }) {
-  const { showCompleted, numberOfItems, setShowComplete, setNumberOfItems } = useContext(settings);
+  const { showCompleted, numberOfItems, setShowCompleted, setNumberOfItems } = useContext(settings);
 
   function handleNumberChange(e) {
     setNumberOfItems(e);
@@ -15,7 +15,7 @@ function SettingsForm({ setShowForm }) {
   }
 
   function handleSwitchChange(e) {
-    setShowComplete(e.target.checked);
+    setShowCompleted(e.target.checked);
     localStorage.clear();
     localStorage.setItem('settings', JSON.stringify({
       numberOfItems: numberOfItems,

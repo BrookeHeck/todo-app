@@ -12,21 +12,37 @@ const ToDo = () => {
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
 
-  const [showCompleted, setShowComplete] = useState(true);
+  const [showCompleted, setShowCompleted] = useState(true);
   const [numberOfItems, setNumberOfItems] = useState(3);
 
   useEffect(() => {
-    let incompleteCount = list.filter(item => !item.complete).length;
-    setIncomplete(incompleteCount);
+    getLocalStorageSetting();
+
+    getIncompleteCount();
     document.title = `To Do List: ${incomplete}`;
   }, [list]);
+
+  function getIncompleteCount() {
+    let incompleteCount = list.filter(item => !item.complete).length;
+    setIncomplete(incompleteCount);
+  }
+
+  function getLocalStorageSetting() {
+    try {
+      const settings = JSON.parse(localStorage.getItem('settings'));
+      setNumberOfItems(settings.numberOfItems);
+      setShowCompleted(settings.showCompleted);
+    } catch(e) {
+      console.log('nothing in storage');
+    }
+  }
 
   return (
     <settings.Provider value={
       {
         ...{
           showCompleted: showCompleted,
-          setShowComplete: setShowComplete,
+          setShowCompleted: setShowCompleted,
           numberOfItems: numberOfItems,
           setNumberOfItems: setNumberOfItems,
         }
