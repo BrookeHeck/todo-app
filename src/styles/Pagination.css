@@ -3,6 +3,8 @@
   color: white;
   padding: 5px;
   margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 #paginationDiv {
