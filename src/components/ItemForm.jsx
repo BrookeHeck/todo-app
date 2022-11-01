@@ -14,7 +14,6 @@ function ItemForm({ list, setList }) {
   function addItem(item) {
     item.id = uuid();
     item.complete = false;
-    console.log(item);
     setList([...list, item]);
   }
 

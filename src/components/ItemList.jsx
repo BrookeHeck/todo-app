@@ -9,10 +9,9 @@ function ItemList({ list, setList }) {
   const [ displayedList, setDisplayedList] = useState(list);
 
   useEffect(() => {
-    console.log(context);
     setDisplayedList(list);
     if(!context.showCompleted) setDisplayedList(filterByComplete());
-  }, [list]);
+  }, [context.showCompleted, list]);
 
   function filterByComplete() {
     return list.filter(item => !item.complete)
@@ -44,7 +43,7 @@ function ItemList({ list, setList }) {
       {getPageList().map(item => (
           <Item item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} key={item.id} />
       ))}
-      <Pagination setCurrentPage={setCurrentPage} listLength={list.length} />
+      <Pagination setCurrentPage={setCurrentPage} listLength={displayedList.length} />
     </div>
   )
 }
