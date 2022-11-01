@@ -7,10 +7,20 @@ function SettingsForm({ setShowForm }) {
 
   function handleNumberChange(e) {
     setNumberOfItems(e);
+    localStorage.clear();
+    localStorage.setItem('settings', JSON.stringify({
+      numberOfItems: e,
+      showCompleted: showCompleted,
+    }));
   }
 
   function handleSwitchChange(e) {
     setShowComplete(e.target.checked);
+    localStorage.clear();
+    localStorage.setItem('settings', JSON.stringify({
+      numberOfItems: numberOfItems,
+      showCompleted: e.target.checked,
+    }));
   }
 
   return (
