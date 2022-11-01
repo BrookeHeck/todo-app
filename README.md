@@ -3,7 +3,7 @@
 ## Overview
 This application is for keeping track of tasks, who is assigned the tasks, and how difficult each task is. The current version of the application allows you to submit the task with an assignee and difficulty level attached to it. The tasks show in a list to the right. You can change the status of the task in the list from incomplete to complete. A count of uncompleted tasks show at the top.
 
-[Deployed Site](https://unique-cendol-3e90d5.netlify.app/)
+[Deployed Site](https://symphonious-granita-4b24da.netlify.app/)
 
 ## UML
 <img src='./lab31.png'>
