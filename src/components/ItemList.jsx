@@ -38,7 +38,7 @@ function ItemList({ list, setList }) {
   }
 
   return (
-    <div className='list'>
+    <div className='list' data-testid='item-list'>
       {getPageList().map(item => (
           <Item item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} key={item.id} />
       ))}
