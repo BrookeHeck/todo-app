@@ -51,15 +51,16 @@ function SettingsForm({ setShowForm }) {
           checked={context.showCompleted}
           label='Show Completed'
           onChange={handleSwitchChange}
+          data-testid="show-completed"
         />
 
         <Label> Sort By: 
           <div className="bp4-html-select">
             <select defaultValue={context.sortBy} onChange={handleSelectChange}>
-              <option value='added'>Added</option>
-              <option value='difficulty'>Difficulty</option>
-              <option value='task'>Task</option>
-              <option value='assignee'>Assignee</option>
+              <option value='added' role='sort'>Added</option>
+              <option value='difficulty' role='sort'>Difficulty</option>
+              <option value='task' role='sort'>Task</option>
+              <option value='assignee' role='sort'>Assignee</option>
             </select>
             <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
           </div>
