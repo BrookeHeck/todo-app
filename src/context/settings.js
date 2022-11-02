@@ -1,8 +1,33 @@
-import React from 'react';
+import { useState, createContext, useEffect } from 'react';
 
-const settings = React.createContext({
-  showCompleted: true,
-  numberOfItems: 3,
-});
+export const SettingsContext = createContext();
 
-export default settings;
+function SettingsProvider(props) {
+  const [ showCompleted, setShowCompleted ] = useState(true);
+  const [ numberOfItems, setNumberOfItems ] = useState(3);
+  const [ sortBy, setSortBy ] = useState('added');
+
+  useEffect(() => {
+    const storage = localStorage.getItem('settings');
+    if(storage) {
+      const storageObject = JSON.parse(storage);
+      setShowCompleted(storageObject.showCompleted);
+      setNumberOfItems(storageObject.numberOfItems);
+      setSortBy(storageObject.sortBy);
+    }
+  }, []);
+
+  return (
+    <SettingsContext.Provider
+      value = {{ 
+        showCompleted, setShowCompleted,
+        numberOfItems, setNumberOfItems,
+        sortBy, setSortBy
+      }}
+    >
+      {props.children}
+    </SettingsContext.Provider>
+  )
+}
+
+export default SettingsProvider;

@@ -1,15 +1,25 @@
 import React from 'react';
-import { Button, Card } from '@blueprintjs/core';
+import { Card } from '@blueprintjs/core';
+import './../styles/card.css';
 
-function Item({item, toggleComplete, deleteItem }) {
+function Item({ item, toggleComplete, deleteItem }) {
   return (
-    <Card>
-        <p>{item.text}</p>
-        <p><small>Assigned to: {item.assignee}</small></p>
-        <p><small>Difficulty: {item.difficulty}</small></p>
-        <Button onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</Button>
-        <Button onClick={() => deleteItem(item.id)}>Delete Item</Button>
-        <hr />
+    <Card className='item-card'>
+      <div className='card-header'>
+        <p onClick={() => toggleComplete(item.id)}>
+          {item.complete ? 'Complete' : 'Pending'}
+        </p>
+        <p>{item.assignee}</p>
+        <p id='delete' onClick={() => deleteItem(item.id)}>x</p>
+      </div>
+
+
+      <hr />
+      <p>{item.text}</p>
+      <p><small>Difficulty: {item.difficulty}</small></p>
+
+
+
     </Card>
   )
 }

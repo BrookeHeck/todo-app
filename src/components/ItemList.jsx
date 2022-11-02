@@ -1,12 +1,20 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Item from './Item';
-import settings from './../context/settings';
+import { SettingsContext } from './../context/settings';
 import Pagination from './Pagination.jsx'
+import sortAndFilter from './../lib/sorting';
+
 function ItemList({ list, setList }) {
 
-  const { numberOfItems } = useContext(settings);
+  const context = useContext(SettingsContext);
   const [currentPage, setCurrentPage] = useState(1);
+  const [ displayedList, setDisplayedList] = useState(list);
 
+  useEffect(() => {
+    const filteredList = sortAndFilter(list, context.showCompleted, context.sortBy);    
+    setDisplayedList(filteredList);
+
+  }, [context.showCompleted, list, context.sortBy]);
 
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);
@@ -20,24 +28,21 @@ function ItemList({ list, setList }) {
       }
       return item;
     });
-
     setList(items);
   }
 
   function getPageList() {
-    const start = currentPage * numberOfItems - numberOfItems;
-    const end = (start + numberOfItems) < list.length ? start + numberOfItems : list.length;
-    return list.slice(start, end);
+    const start = currentPage * context.numberOfItems - context.numberOfItems;
+    const end = (start + context.numberOfItems) < displayedList.length ? start + context.numberOfItems : displayedList.length;
+    return displayedList.slice(start, end);
   }
 
   return (
-    <div className='list'>
+    <div className='list' data-testid='item-list'>
       {getPageList().map(item => (
-        <div key={item.id}>
-          <Item item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} />
-        </div>
+          <Item item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} key={item.id} />
       ))}
-      <Pagination setCurrentPage={setCurrentPage} listLength={list.length} />
+      <Pagination setCurrentPage={setCurrentPage} listLength={displayedList.length} />
     </div>
   )
 }

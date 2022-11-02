@@ -14,7 +14,6 @@ function ItemForm({ list, setList }) {
   function addItem(item) {
     item.id = uuid();
     item.complete = false;
-    console.log(item);
     setList([...list, item]);
   }
 
@@ -40,7 +39,7 @@ function ItemForm({ list, setList }) {
         </Label>
 
         <Label>
-          <button type="submit">Add Item</button>
+          <button type="submit" data-testid="add-button">Add Item</button>
         </Label>
       </FormGroup>
     </form>

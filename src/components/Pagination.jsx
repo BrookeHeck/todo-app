@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import settings from './../context/settings';
+import {SettingsContext} from './../context/settings';
 import './../styles/Pagination.css';
 
 function Pagination({ setCurrentPage, listLength }) {
-  const { numberOfItems } = useContext(settings);
+  const context = useContext(SettingsContext);
 
   function handlePageClick(e) {
     setCurrentPage(parseInt(e.target.innerHTML));
@@ -11,7 +11,7 @@ function Pagination({ setCurrentPage, listLength }) {
 
   function getPageNumbers() {
     const numArr = [];
-    for (let i = 1; i <= Math.ceil(listLength / numberOfItems); i++) {
+    for (let i = 1; i <= Math.ceil(listLength / context.numberOfItems); i++) {
       numArr.push(i);
     }
     return numArr;
