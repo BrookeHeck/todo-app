@@ -13,7 +13,7 @@ function SettingsProvider(props) {
       const storageObject = JSON.parse(storage);
       setShowCompleted(storageObject.showCompleted);
       setNumberOfItems(storageObject.numberOfItems);
-      setSortBy(storage.sortBy);
+      setSortBy(storageObject.sortBy);
     }
   }, []);
 

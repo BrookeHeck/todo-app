@@ -11,11 +11,10 @@ function ItemList({ list, setList }) {
   const [ displayedList, setDisplayedList] = useState(list);
 
   useEffect(() => {
-    console.log(context.sortBy);
     const filteredList = sortAndFilter(list, context.showCompleted, context.sortBy);    
     setDisplayedList(filteredList);
 
-  }, [context.showCompleted, list, context.sortBy, context.setSortBy]);
+  }, [context.showCompleted, list, context.sortBy]);
 
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);
