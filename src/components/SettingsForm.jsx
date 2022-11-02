@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import {SettingsContext} from '../context/settings';
+import { SettingsContext } from '../context/settings';
 import { FormGroup, Label, NumericInput, Switch, Button } from '@blueprintjs/core'
 
 function SettingsForm({ setShowForm }) {
@@ -11,6 +11,7 @@ function SettingsForm({ setShowForm }) {
     localStorage.setItem('settings', JSON.stringify({
       numberOfItems: e,
       showCompleted: context.showCompleted,
+      sortBy: context.sortBy
     }));
   }
 
@@ -20,6 +21,17 @@ function SettingsForm({ setShowForm }) {
     localStorage.setItem('settings', JSON.stringify({
       numberOfItems: context.numberOfItems,
       showCompleted: e.target.checked,
+      sortBy: context.sortBy
+    }));
+  }
+
+  function handleSelectChange(e) {
+    context.setSortBy(e.target.value);
+    localStorage.clear();
+    localStorage.setItem('settings', JSON.stringify({
+      numberOfItems: context.numberOfItems,
+      showCompleted: context.showCompleted,
+      sortBy: e.target.value
     }));
   }
 
@@ -40,9 +52,22 @@ function SettingsForm({ setShowForm }) {
           label='Show Completed'
           onChange={handleSwitchChange}
         />
+
+        <Label> Sort By: 
+          <div className="bp4-html-select">
+            <select defaultValue={context.sortBy} onChange={handleSelectChange}>
+              <option value='added'>Added</option>
+              <option value='difficulty'>Difficulty</option>
+              <option value='task'>Task</option>
+              <option value='assignee'>Assignee</option>
+            </select>
+            <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+          </div>
+        </Label>
+
       </FormGroup>
       <Button onClick={() => setShowForm(false)}>Close</Button>
-    </form>
+    </form >
   )
 }
 

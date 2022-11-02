@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import Item from './Item';
 import { SettingsContext } from './../context/settings';
 import Pagination from './Pagination.jsx'
-import sort from './../lib/sorting';
+import sortAndFilter from './../lib/sorting';
 
 function ItemList({ list, setList }) {
 
@@ -11,9 +11,11 @@ function ItemList({ list, setList }) {
   const [ displayedList, setDisplayedList] = useState(list);
 
   useEffect(() => {
-    setDisplayedList(list);
-    if(!context.showCompleted) setDisplayedList(sort.filterByComplete(list));
-  }, [context.showCompleted, list]);
+    console.log(context.sortBy);
+    const filteredList = sortAndFilter(list, context.showCompleted, context.sortBy);    
+    setDisplayedList(filteredList);
+
+  }, [context.showCompleted, list, context.sortBy, context.setSortBy]);
 
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);
