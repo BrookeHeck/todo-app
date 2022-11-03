@@ -4,7 +4,7 @@ import { SettingsContext } from './../context/settings';
 import { LoginContext } from '../context/auth';
 import Pagination from './Pagination.jsx'
 import sortAndFilter from './../lib/sorting';
-import { getTasks } from '../lib/server-requests';
+import { getTasks, deleteTask, updateTask } from '../lib/server-requests';
 
 function ItemList({ list, setList }) {
 
@@ -29,6 +29,7 @@ function ItemList({ list, setList }) {
   }, [context.showCompleted, list, context.sortBy]);
 
   function deleteItem(id) {
+    deleteTask(loginContext.token, id);
     const items = list.filter(item => item.id !== id);
     setList(items);
   }
@@ -37,6 +38,7 @@ function ItemList({ list, setList }) {
     const items = list.map(item => {
       if (item.id == id) {
         item.complete = !item.complete;
+        updateTask(loginContext.token, item);
       }
       return item;
     });

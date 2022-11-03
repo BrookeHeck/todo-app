@@ -28,9 +28,19 @@ async function deleteTask(token, task_id) {
   return response.body;
 }
 
+async function updateTask(token, item) {
+  const response = await superagent
+    .put(`${baseURL}/${item.id}`)
+    .send(item)
+    .set('Authorization', `Bearer ${token}`)
+    .catch(err => console.log(err));
+  // return response.body;
+}
+
 module.exports = {
   getTasks,
   addTask,
   deleteTask,
+  updateTask,
 }
 
