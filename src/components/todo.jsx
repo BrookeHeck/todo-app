@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { LoginContext } from '../context/auth';
 import Header from './Header';
 import ItemForm from './ItemForm';
 import ItemList from './ItemList';
 import Nav from './Nav';
+import SplashPage from './SplashPage';
+import { When } from 'react-if';
 
 import './../styles/todo.css';
 
 const ToDo = () => {
-
+  const context = useContext(LoginContext);
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
 
@@ -25,11 +28,17 @@ const ToDo = () => {
   return (
     <>
       <Nav />
-      <Header incomplete={incomplete} />
-      <div className='listBody'>
-        <ItemForm list={list} setList={setList} />
-        <ItemList list={list} setList={setList} />
-      </div>
+      <When condition={context.loggedIn}>
+        <Header incomplete={incomplete} />
+        <div className='listBody'>
+          <ItemForm list={list} setList={setList} />
+          <ItemList list={list} setList={setList} />
+        </div>
+      </When>
+
+      <When condition={!context.loggedIn}>
+        <SplashPage/>
+      </When>
     </>
   );
 };
