@@ -16,7 +16,6 @@ function ItemList({ list, setList }) {
   useEffect(() => {
     const getTasksOnRender = async () => {
       const dbList = await getTasks(loginContext.user.id, loginContext.token);
-      console.log(dbList);
       setList(dbList);
     }
     getTasksOnRender();

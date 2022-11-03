@@ -1,30 +1,26 @@
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent, getByLabelText } from "@testing-library/react";
-import App from './../app';
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import { MockProvider, MockConsumer } from "../context/mock";
+import SettingsProvider from '../context/settings';
+import ToDo from './../components/todo.jsx';
+
+jest.mock('./../context/auth', () => {
+  jest.requireActual('./../context/auth'),
+})
 
 describe('Testing item list functions', () => {
 
-  const fakeUser = {
-    eventProperties: {
-      target: {
-        username: {value: 'test'},
-        password: {value: 'foo'},
-      },
-    },
-  }
+  afterEach(() => {
+    cleanup();
+  })
 
-  beforeAll(() => {
-    console.log(fakeUser.eventProperties.target.username.value)
-    render( <App />);
-    fireEvent.click(screen.getByText('Sign Up'));
-
-    // fireEvent.change(screen.getByLabelText('username'), {target: {value: 'test'}});
-    // fireEvent.change(screen.getByLabelText('password'), {target: {value: 'foo'}});
-
-    fireEvent.submit(screen.getByText('submit'), fakeUser);
-  });
-
-  
+  render( 
+    <LoginContext.Provider value={mockLoginContext}>
+      <SettingsProvider>
+        <ToDo />
+      </SettingsProvider>
+    </LoginContext.Provider>
+  );
 
   test('Should be able to add item to list', () => {
     const addButton = screen.getByTestId('add-button');

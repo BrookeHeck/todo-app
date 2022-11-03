@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext } from 'react';
 import React from 'react';
 import cookie from 'react-cookies';
 import superagent from 'superagent';
@@ -51,15 +51,6 @@ function LoginProvider(props) {
   const logout = () => {
     setLoginState(false, null, {});
   };
-
-
-
-  // componentDidMount() {
-  //   const qs = new URLSearchParams(window.location.search);
-  //   const cookieToken = cookie.load('auth');
-  //   const token = qs.get('token') || cookieToken || null;
-  //   this.validateToken(token);
-  // }
 
   return (
     <LoginContext.Provider value={{

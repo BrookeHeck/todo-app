@@ -2,13 +2,19 @@ import SettingsProvider from '../context/settings';
 import SettingsForm from '../components/SettingsForm';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { LoginContext } from '../context/auth';
+
+
 
 describe('Test the item list component', () => {
+
   test('Test show complete', () => {
     render(
-      <SettingsProvider>
-        <SettingsForm />
-      </SettingsProvider>
+      <LoginContext.Provider value ={mockLoginContext}>
+        <SettingsProvider>
+          <SettingsForm />
+        </SettingsProvider>
+      </LoginContext.Provider>
     )
 
     const storeSettings = jest.spyOn(window.localStorage.__proto__, 'setItem').mockImplementation();

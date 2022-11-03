@@ -49,9 +49,10 @@ function Nav() {
         </When>
 
       </Navbar>
-      {
-        showSettingsForm && <SettingsForm setShowSettingsForm={setShowSettingsForm} />
-      }
+
+      <When condition={showSettingsForm && context.loggedIn}>
+        <SettingsForm setShowForm={setShowSettingsForm} />
+      </When>
     </>
   )
 }
