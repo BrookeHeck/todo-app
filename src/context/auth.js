@@ -6,7 +6,7 @@ import superagent from 'superagent';
 
 export const LoginContext = createContext();
 
-function LoginProvider() {
+function LoginProvider(props) {
 
   const [ loggedIn, setLoggedIn ] = useState(false);
   const [ token, setToken ] = useState('');
@@ -23,8 +23,8 @@ function LoginProvider() {
       console.log(response);
   }
 
-  async function login(username, password) {
-    
+  async function signin(username, password) {
+    console.log(username, password);
   }
 
   function setLoginState(loggedIn, token, user) {
@@ -52,10 +52,11 @@ function LoginProvider() {
       loggedIn: loggedIn,
       token: token,
       user: user,
-      login: login,
+      signup: signup,
+      signin: signin,
       logout: logout,
     }}>
-      {this.props.children}
+      {props.children}
     </LoginContext.Provider>
   );
 }
