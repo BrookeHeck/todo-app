@@ -1,20 +1,22 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import useForm from '../hooks/form.js';
 import { FormGroup, Label } from '@blueprintjs/core';
-
-import { v4 as uuid } from 'uuid';
-
+import { LoginContext } from './../context/auth';
+import { addTask } from './../lib/server-requests';
 function ItemForm({ list, setList }) {
+  const context = useContext(LoginContext);
+
   const [defaultValues] = useState({
     difficulty: 4,
   });
 
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
-  function addItem(item) {
-    item.id = uuid();
+  async function addItem(item) {
+    item.user_id = context.user.id;
     item.complete = false;
-    setList([...list, item]);
+    const itemRecord = await addTask(context.token, item);
+    setList([...list, itemRecord]);
   }
 
   return (
