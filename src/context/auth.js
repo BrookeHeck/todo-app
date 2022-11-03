@@ -8,9 +8,9 @@ export const LoginContext = createContext();
 
 function LoginProvider(props) {
 
-  const [ loggedIn, setLoggedIn ] = useState(false);
-  const [ token, setToken ] = useState('');
-  const [ user, setUser ] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [token, setToken] = useState('');
+  const [user, setUser] = useState({});
 
   async function signup(username, password) {
     const response = await superagent
@@ -20,11 +20,25 @@ function LoginProvider(props) {
         'password': password,
       })
       .catch(console.error);
-      console.log(response);
+
+    if (response.body.token) {
+      setLoginState(true, response.body.token, response.body.user);
+    } else {
+      alert('oh no');
+    }
   }
 
   async function signin(username, password) {
-    console.log(username, password);
+    const response = await superagent
+      .post(`${process.env.REACT_APP_SERVER_URL}/signin`)
+      .auth(username, password)
+      .catch(console.error)
+
+    if(response.body.token) {
+      setLoginState(true, response.body.token, response.body.user);
+    } else {
+      alert('oh no');
+    }
   }
 
   function setLoginState(loggedIn, token, user) {
