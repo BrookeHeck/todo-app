@@ -6,7 +6,6 @@ import ItemList from './ItemList';
 import Nav from './Nav';
 import SplashPage from './SplashPage';
 import { When } from 'react-if';
-
 import './../styles/todo.css';
 
 const ToDo = () => {
@@ -15,7 +14,6 @@ const ToDo = () => {
   const [incomplete, setIncomplete] = useState([]);
 
   useEffect(() => {
-
     getIncompleteCount();
     document.title = `To Do List: ${incomplete}`;
   }, [list]);

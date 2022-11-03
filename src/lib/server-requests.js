@@ -5,7 +5,7 @@ const baseURL = `${process.env.REACT_APP_SERVER_URL}/api/v1/tasks`;
 
 async function getTasks(user_id, token) {
   const response = await superagent
-    .get(`${baseURL}/user_id`)
+    .get(`${baseURL}/${user_id}`)
     .set('Authorization', `Bearer ${token}`)
     .catch(err => console.log(err));
   return response.body;

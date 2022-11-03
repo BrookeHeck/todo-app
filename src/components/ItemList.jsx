@@ -1,14 +1,26 @@
 import { useContext, useState, useEffect } from 'react';
 import Item from './Item';
 import { SettingsContext } from './../context/settings';
+import { LoginContext } from '../context/auth';
 import Pagination from './Pagination.jsx'
 import sortAndFilter from './../lib/sorting';
+import { getTasks } from '../lib/server-requests';
 
 function ItemList({ list, setList }) {
 
   const context = useContext(SettingsContext);
+  const loginContext = useContext(LoginContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [ displayedList, setDisplayedList] = useState(list);
+
+  useEffect(() => {
+    const getTasksOnRender = async () => {
+      const dbList = await getTasks(loginContext.user.id, loginContext.token);
+      console.log(dbList);
+      setList(dbList);
+    }
+    getTasksOnRender();
+  }, []);
 
   useEffect(() => {
     const filteredList = sortAndFilter(list, context.showCompleted, context.sortBy);    
