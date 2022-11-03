@@ -20,7 +20,7 @@ function Nav() {
         </Navbar.Group>
 
         <When condition={context.loggedIn}>
-          <Navbar.Group align="right">
+          <Navbar.Group>
             <Button className="bp4-minimal" text="Logout" onClick={context.logout} />
             <Button
               className="bp4-minimal"
