@@ -1,15 +1,32 @@
-'use strict';
-
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, getByLabelText } from "@testing-library/react";
 import App from './../app';
 
 describe('Testing item list functions', () => {
 
-  test('Should be able to add item to list', () => {
+  const fakeUser = {
+    eventProperties: {
+      target: {
+        username: {value: 'test'},
+        password: {value: 'foo'},
+      },
+    },
+  }
 
+  beforeAll(() => {
+    console.log(fakeUser.eventProperties.target.username.value)
     render( <App />);
+    fireEvent.click(screen.getByText('Sign Up'));
 
+    // fireEvent.change(screen.getByLabelText('username'), {target: {value: 'test'}});
+    // fireEvent.change(screen.getByLabelText('password'), {target: {value: 'foo'}});
+
+    fireEvent.submit(screen.getByText('submit'), fakeUser);
+  });
+
+  
+
+  test('Should be able to add item to list', () => {
     const addButton = screen.getByTestId('add-button');
     fireEvent.click(addButton);
 
@@ -18,8 +35,6 @@ describe('Testing item list functions', () => {
   });
 
   test('Should be able to change the status of the item', () => {
-
-    render( <App />);
 
     const addButton = screen.getByTestId('add-button');
     fireEvent.click(addButton);
@@ -31,7 +46,6 @@ describe('Testing item list functions', () => {
   });
 
   test('Should be able to delete an item', () => {
-    render( <App />);
 
     const addButton = screen.getByTestId('add-button');
     fireEvent.click(addButton);

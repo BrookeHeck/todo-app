@@ -1,5 +1,3 @@
-'use strict';
-
 import SettingsProvider from '../context/settings';
 import SettingsForm from '../components/SettingsForm';
 import '@testing-library/jest-dom';
