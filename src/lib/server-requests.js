@@ -3,7 +3,7 @@
 const superagent = require('superagent');
 const baseURL = `${process.env.REACT_APP_SERVER_URL}/api/v1/tasks`;
 
-async function getTasks(user_id, token) {
+export const getTasks = async (user_id, token) => {
   const response = await superagent
     .get(`${baseURL}/${user_id}`)
     .set('Authorization', `Bearer ${token}`)
@@ -11,7 +11,7 @@ async function getTasks(user_id, token) {
   return response.body;
 }
 
-async function addTask(token, task) {
+export const addTask = async (token, task) => {
   const response = await superagent
     .post(baseURL)
     .send(task)
@@ -20,7 +20,7 @@ async function addTask(token, task) {
   return response.body;
 }
 
-async function deleteTask(token, task_id) {
+export const deleteTask = async (token, task_id) => {
   const response = await superagent
     .delete(`${baseURL}/${task_id}`)
     .set('Authorization', `Bearer ${token}`)
@@ -28,19 +28,12 @@ async function deleteTask(token, task_id) {
   return response.body;
 }
 
-async function updateTask(token, item) {
+export const updateTask = async (token, item) => {
   const response = await superagent
     .put(`${baseURL}/${item.id}`)
     .send(item)
     .set('Authorization', `Bearer ${token}`)
     .catch(err => console.log(err));
   // return response.body;
-}
-
-module.exports = {
-  getTasks,
-  addTask,
-  deleteTask,
-  updateTask,
 }
 
