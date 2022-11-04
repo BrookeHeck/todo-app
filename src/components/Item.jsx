@@ -6,11 +6,11 @@ function Item({ item, toggleComplete, deleteItem }) {
   return (
     <Card className='item-card'>
       <div className='card-header'>
-        <p onClick={() => toggleComplete(item.id)}>
+        <p onClick={() => toggleComplete(item.id)} data-testid='pending'>
           {item.complete ? 'Complete' : 'Pending'}
         </p>
         <p>{item.assignee}</p>
-        <p id='delete' onClick={() => deleteItem(item.id)}>x</p>
+        <p id='delete' onClick={() => deleteItem(item.id)} data-testid='delete'>x</p>
       </div>
 
 
