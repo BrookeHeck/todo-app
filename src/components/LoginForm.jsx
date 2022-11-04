@@ -25,7 +25,7 @@ function LoginForm({ action, setShowLoginForm }) {
         </Label>
 
         <Label>
-          <span>Password</span>
+          <span>password</span>
           <input name="password" type="password" />
         </Label>
       </FormGroup>

@@ -1,49 +1,75 @@
-'use strict';
-
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
-import App from './../app';
+import { render, screen, fireEvent, cleanup, waitFor } from "@testing-library/react";
+import SettingsProvider from '../context/settings';
+import { LoginContext } from "../context/auth";
+import ToDo from './../components/todo.jsx';
+jest.mock('./../lib/server-requests');
+import { getTasks, addTask } from './../lib/server-requests';
+
+const mockLoginContext = {
+  loggedIn: true,
+  user: {
+    username: 'test2',
+    id: '1',
+    role: 'admin',
+  }
+}
+
+const mockTaskReturn = {
+  id: 1,
+  user_id: '1',
+  complete: false,
+  difficulty: 1,
+  text: 'text',
+  assignee: 'test',
+}
+
+
+getTasks.mockImplementation(() => []);
+addTask.mockImplementation(() => mockTaskReturn);
 
 describe('Testing item list functions', () => {
 
-  test('Should be able to add item to list', () => {
-
-    render( <App />);
-
-    const addButton = screen.getByTestId('add-button');
-    fireEvent.click(addButton);
-
-    const list = screen.getByTestId('item-list');
-    expect(list).toBeVisible();
+  afterEach(() => {
+    cleanup();
   });
 
-  test('Should be able to change the status of the item', () => {
+  render( 
+    <LoginContext.Provider value={mockLoginContext}>
+      <SettingsProvider>
+        <ToDo />
+      </SettingsProvider>
+    </LoginContext.Provider>
+  );
 
-    render( <App />);
-
+  test('Should be able to add item to list', async () => {
     const addButton = screen.getByTestId('add-button');
-    fireEvent.click(addButton);
+    expect(addButton).toBeInTheDocument();
 
-    const changeStatusButton = screen.getByText('Complete: false');
-    fireEvent.click(changeStatusButton);
+    fireEvent.click(addButton);
+    await waitFor(() => {
+      const list = screen.getByTestId('item-list');
+      expect(list).toBeVisible();
+      expect(screen.getByTestId('pending')).toBeVisible();
+    });
+  });  
+
+  test('Should be able to change the status of the item', async () => {  
+    const pendingButton = screen.getByTestId('pending');
+    fireEvent.click(pendingButton);
+    await waitFor(() => {
+      const newStatus = screen.getByTestId('pending');
+      expect(newStatus).toHaveTextContent('Complete');
+    });
+  });
+
+  // test('Should be able to delete an item', async () => {  
+  //   const deleteButton = screen.getByText('Delete Item');
+  //   fireEvent.click(deleteButton);
+  //   await waitFor(() => {
+  //     expect(deleteButton).not.toBeVisible();
+  //   });
     
-    const newStatus = screen.getByText('Complete: true');
-  });
-
-  test('Should be able to delete an item', () => {
-    render( <App />);
-
-    const addButton = screen.getByTestId('add-button');
-    fireEvent.click(addButton);
-
-    const list = screen.getByTestId('item-list');
-    expect(list).toBeVisible();
-
-    const deleteButton = screen.getByText('Delete Item');
-    fireEvent.click(deleteButton);
-
-    expect(deleteButton).not.toBeVisible();
-    
-  });
+  // });
 });
 
